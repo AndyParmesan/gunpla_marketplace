@@ -1,17 +1,66 @@
 .App {
     height: 100vh;
-    padding: 0 100px;
+    padding: 20px 100px;
     display: flex;
-    flex-direction: column; /* Stacks children vertically */
-    justify-content: flex-start; /* Align items to the top */
+    flex-direction: column; /* Stack header and items */
+    justify-content: flex-start;
+    align-items: center;
     text-align: center;
-}
-
-.Gunpla {
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .Gunpla {
     display: flex;
-    flex-wrap: wrap; /* Ensures child elements wrap if needed */
-}
-
-.Gunplas {
-    flex: 1;
-}
+    flex-wrap: wrap; /* Allow items to wrap in rows */
+    gap: 20px; /* Add spacing between boxes */
+    justify-content: center; /* Center items horizontally */
+  }
+  
+  .Gunpla-item {
+    background-color: #f9f9f9; /* Light background for boxes */
+    border: 1px solid #ccc; /* Border for visibility */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Internal spacing */
+    width: 200px; /* Fixed width for uniform boxes */
+    text-align: left; /* Align text to the left */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .Gunpla-item h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .Gunpla-item p {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 10px;
+  }
+  
+  .Gunpla-item span {
+    font-weight: bold;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
