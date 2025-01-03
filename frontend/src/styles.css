@@ -1,0 +1,17 @@
+.App {
+    height: 100vh;
+    padding: 0 100px;
+    display: flex;
+    flex-direction: column; /* Stacks children vertically */
+    justify-content: flex-start; /* Align items to the top */
+    text-align: center;
+}
+
+.Gunpla {
+    display: flex;
+    flex-wrap: wrap; /* Ensures child elements wrap if needed */
+}
+
+.Gunplas {
+    flex: 1;
+}

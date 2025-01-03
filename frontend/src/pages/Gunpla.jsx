@@ -22,12 +22,12 @@ const Gunpla =()=>{
         <div> 
             <h1> Gunpla Model MarketPlace</h1>
             <div classname= 'Gunpla'>
-                {Gunpla.map((Gunpla)=>(
-                    <div className='Gunpla' key={Gunpla.id}>
-                    {Gunpla.image && <img src={Gunpla.img} alt=""></img>}
+                {Gunpla.map((Gunplas)=>(
+                    <div className='Gunplas' key={Gunplas.id}>
+                    {Gunplas.image && <img src={Gunplas.img} alt=""></img>}
                     <h2> {Gunpla.prod_name}</h2>
-                    <p> {Gunpla.prod_description}</p>
-                    <span> {Gunpla.price}</span>
+                    <p> {Gunplas.prod_description}</p>
+                    <span> {Gunplas.price}</span>
 
                     </div>
                 ))}

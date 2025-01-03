@@ -7,6 +7,7 @@ import{
 import Gunpla from "./pages/Gunpla";
 import Update from "./pages/Update";
 import Add from "./pages/Add";
+import "./styles.css"
 
 function App() {
   return (

@@ -27,15 +27,20 @@ import cors from 'cors'
         } )
     })
     app.post("/gunpla", (req, res)=>{
-        const q= "INSERT INTO gunpla (`id`, `prod_name`, `prod_description`, `image`) VALUES(?)";
+        console.log("Request body:", req.body);
+        const q= "INSERT INTO gunpla (`prod_name`, `prod_description`, `image`, `price`) VALUES(?)";
         const VALUES = [
-            req.body.id,
+
             req.body.prod_name,
             req.body.prod_description,
             req.body.image,
+            req.body.price,
         ];
         db.query(q,[VALUES], (err, data)=>{
-            if(err) return res.json(err)
+            if(err) {
+                console.error("Error inserting data:", err); 
+                return res.json(err)
+            }
                 return res.json("successfully executed")
         } )
     })
