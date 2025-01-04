@@ -45,7 +45,19 @@ import cors from 'cors'
         } )
     })
 
-
+    app.delete("/gunpla/:id", (req, res) => {
+        const gunplaId = req.params.id; // Make sure variable names match
+        const q = "DELETE FROM gunpla WHERE id = ?";
+    
+        db.query(q, [gunplaId], (err, data) => {
+            if (err) {
+                console.error("Error deleting data:", err);
+                return res.status(500).json(err); // Return error response with status code
+            }
+            return res.status(200).json("Successfully deleted");
+        });
+    });
+    
 
 
 
