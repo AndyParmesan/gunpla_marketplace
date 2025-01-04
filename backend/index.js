@@ -29,14 +29,14 @@ import cors from 'cors'
     app.post("/gunpla", (req, res)=>{
         console.log("Request body:", req.body);
         const q= "INSERT INTO gunpla (`prod_name`, `prod_description`, `image`, `price`) VALUES(?)";
-        const VALUES = [
+        const values = [
 
             req.body.prod_name,
             req.body.prod_description,
             req.body.image,
             req.body.price,
         ];
-        db.query(q,[VALUES], (err, data)=>{
+        db.query(q,[values], (err, data)=>{
             if(err) {
                 console.error("Error inserting data:", err); 
                 return res.json(err)
