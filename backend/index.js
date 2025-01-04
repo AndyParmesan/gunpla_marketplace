@@ -19,7 +19,7 @@ app.use(cors());
 const __dirname = new URL('.', import.meta.url).pathname;
 
 // Serve static files from the "images" folder, accessed via "/uploads" in the URL
-app.use("/uploads", express.static(path.join(__dirname, "images")));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get("/", (req, res) => {
   res.json("hi, this is the backend");
@@ -68,6 +68,22 @@ app.delete("/gunpla/:id", (req, res) => {
     return res.status(200).json("Successfully deleted");
   });
 });
+
+app.put('/gunpla/:id', (req, res) => {
+    const { prod_name, prod_description, price, image } = req.body;
+    const gunplaId = req.params.id;
+    
+    const query = 'UPDATE gunpla SET prod_name = ?, prod_description = ?, price = ?, image = ? WHERE id = ?';
+    db.query(query, [prod_name, prod_description, price, image, gunplaId], (err, result) => {
+      if (err) {
+        console.error("Error updating gunpla:", err);
+        return res.status(500).json({ message: "Error updating gunpla" });
+      }
+      res.status(200).json({ message: "Gunpla updated successfully" });
+    });
+  });
+  
+
 
 // Start server
 app.listen(8800, () => {

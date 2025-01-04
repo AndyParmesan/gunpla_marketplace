@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Gunpla/>}></Route>
         <Route path="/Add" element= {<Add/>}></Route>
-        <Route path="/Update" element= {<Update/>}></Route>
+        <Route path="/Update/:id" element= {<Update/>}></Route>
 
       </Routes>
       </BrowserRouter>

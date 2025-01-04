@@ -33,10 +33,12 @@ const Gunpla = () => {
         {Gunpla.map((item) => (
           <div className="Gunpla-item" key={item.id}>
             {/* Dynamically display image based on image field in the database */}
-            <img
-              src={`http://localhost:8800/uploads/${item.image}`} // Example: "image001.jpg"
-              alt={item.prod_name}
-            />
+            <img 
+  src={`http://localhost:8800/uploads/${item.image}`} 
+  alt={item.prod_name} 
+  style={{ width: '200px', height: 'auto' }} 
+/>
+
             <h2>{item.prod_name}</h2>
             <p>{item.prod_description}</p>
             <span>${item.price}</span>

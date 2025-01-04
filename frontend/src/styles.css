@@ -110,3 +110,9 @@ button:hover {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
