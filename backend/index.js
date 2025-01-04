@@ -1,7 +1,8 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
-import path from "path"; // Import path module
+import path from "path";
+import { fileURLToPath } from "url"; // Required for ESM
 
 const app = express();
 
@@ -15,10 +16,11 @@ const db = mysql.createConnection({
 app.use(express.json());
 app.use(cors());
 
-// Get the directory of the current module using import.meta.url
-const __dirname = new URL('.', import.meta.url).pathname;
+// Correct ESM way to get __dirname
+const __filename = fileURLToPath(import.meta.url); // Current file path
+const __dirname = path.dirname(__filename); // Directory of the current file
 
-// Serve static files from the "images" folder, accessed via "/uploads" in the URL
+// Serve static files from the "uploads" folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get("/", (req, res) => {
