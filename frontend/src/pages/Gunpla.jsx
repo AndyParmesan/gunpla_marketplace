@@ -8,7 +8,7 @@ const Gunpla = () => {
   useEffect(() => {
     const fetchAllGunpla = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/Gunpla");
+        const res = await axios.get("http://localhost:8800/gunpla");
         setGunpla(res.data);
       } catch (err) {
         console.log(err);
@@ -19,7 +19,7 @@ const Gunpla = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8800/Gunpla/${id}`);
+      await axios.delete(`http://localhost:8800/gunpla/${id}`);
       setGunpla(Gunpla.filter((item) => item.id !== id));
     } catch (err) {
       console.log(err);
@@ -32,15 +32,24 @@ const Gunpla = () => {
       <div className="Gunpla">
         {Gunpla.map((item) => (
           <div className="Gunpla-item" key={item.id}>
-            <img src={`http://localhost:8800/${item.image}`} alt={item.prod_name} />
+            {/* Dynamically display image based on image field in the database */}
+            <img
+              src={`http://localhost:8800/uploads/${item.image}`} // Example: "image001.jpg"
+              alt={item.prod_name}
+            />
             <h2>{item.prod_name}</h2>
             <p>{item.prod_description}</p>
             <span>${item.price}</span>
             <div className="actions">
-              <button className="delete" onClick={() => handleDelete(item.id)}>
+              <button
+                className="delete"
+                onClick={() => handleDelete(item.id)}
+              >
                 Delete
               </button>
-              <button className="update"><Link to={`/update/${Gunpla.id}`}>Update</Link></button>
+              <button className="update">
+                <Link to={`/update/${item.id}`}>Update</Link>
+              </button>
             </div>
           </div>
         ))}
