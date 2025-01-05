@@ -1,26 +1,23 @@
-import{
-  BrowserRouter,
-  Routes,
-  Route,
-
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import Gunpla from "./pages/Gunpla";
 import Update from "./pages/Update";
 import Add from "./pages/Add";
-import "./styles.css"
+import Orders from "./pages/Orders";
+import "./styles.css";
 
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Gunpla/>}></Route>
-        <Route path="/Add" element= {<Add/>}></Route>
-        <Route path="/Update/:id" element= {<Update/>}></Route>
+  const [orders, setOrders] = useState([]);
 
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Gunpla setOrders={setOrders} />} />
+        <Route path="/add" element={<Add />} />
+        <Route path="/update/:id" element={<Update />} />
+        <Route path="/orders" element={<Orders orders={orders} setOrders={setOrders} />} />
       </Routes>
-      </BrowserRouter>
-    </div>
+    </Router>
   );
 }
 

@@ -6,6 +6,7 @@ import { fileURLToPath } from "url"; // Required for ESM
 
 const app = express();
 
+// Database connection
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -21,73 +22,72 @@ const __filename = fileURLToPath(import.meta.url); // Current file path
 const __dirname = path.dirname(__filename); // Directory of the current file
 
 // Serve static files from the "uploads" folder
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// Test Route
 app.get("/", (req, res) => {
   res.json("hi, this is the backend");
 });
 
+// Get all Gunpla
 app.get("/gunpla", (req, res) => {
-  const q = "SELECT * FROM gunpla";
-  db.query(q, (err, data) => {
+  const query = "SELECT * FROM gunpla";
+  db.query(query, (err, data) => {
     if (err) {
       console.error("Error fetching gunpla:", err);
       return res.status(500).json({ message: "Error fetching data" });
     }
-    return res.json(data);
+    res.json(data);
   });
 });
 
+// Add new Gunpla
 app.post("/gunpla", (req, res) => {
-  console.log("Request body:", req.body);
-  const q =
-    "INSERT INTO gunpla (`prod_name`, `prod_description`, `image`, `price`) VALUES(?)";
-  const values = [
-    req.body.prod_name,
-    req.body.prod_description,
-    req.body.image,
-    req.body.price,
-  ];
+  const { prod_name, prod_description, image, price } = req.body;
+  const query =
+    "INSERT INTO gunpla (`prod_name`, `prod_description`, `image`, `price`) VALUES (?)";
+  const values = [prod_name, prod_description, image, price];
 
-  db.query(q, [values], (err, data) => {
+  db.query(query, [values], (err) => {
     if (err) {
       console.error("Error inserting data:", err);
       return res.status(500).json({ message: "Error inserting data" });
     }
-    return res.json("successfully executed");
+    res.json("Successfully executed");
   });
 });
 
+// Delete Gunpla
 app.delete("/gunpla/:id", (req, res) => {
   const gunplaId = req.params.id;
-  const q = "DELETE FROM gunpla WHERE id = ?";
+  const query = "DELETE FROM gunpla WHERE id = ?";
 
-  db.query(q, [gunplaId], (err, data) => {
+  db.query(query, [gunplaId], (err) => {
     if (err) {
       console.error("Error deleting data:", err);
       return res.status(500).json({ message: "Error deleting item" });
     }
-    return res.status(200).json("Successfully deleted");
+    res.status(200).json("Successfully deleted");
   });
 });
 
-app.put('/gunpla/:id', (req, res) => {
-    const { prod_name, prod_description, price, image } = req.body;
-    const gunplaId = req.params.id;
-    
-    const query = 'UPDATE gunpla SET prod_name = ?, prod_description = ?, price = ?, image = ? WHERE id = ?';
-    db.query(query, [prod_name, prod_description, price, image, gunplaId], (err, result) => {
-      if (err) {
-        console.error("Error updating gunpla:", err);
-        return res.status(500).json({ message: "Error updating gunpla" });
-      }
-      res.status(200).json({ message: "Gunpla updated successfully" });
-    });
-  });
-  
+// Update Gunpla
+app.put("/gunpla/:id", (req, res) => {
+  const { prod_name, prod_description, price, image } = req.body;
+  const gunplaId = req.params.id;
+  const query =
+    "UPDATE gunpla SET prod_name = ?, prod_description = ?, price = ?, image = ? WHERE id = ?";
 
+  db.query(query, [prod_name, prod_description, price, image, gunplaId], (err) => {
+    if (err) {
+      console.error("Error updating gunpla:", err);
+      return res.status(500).json({ message: "Error updating gunpla" });
+    }
+    res.status(200).json("Gunpla updated successfully");
+  });
+});
 
 // Start server
 app.listen(8800, () => {
-  console.log("connected to backend");
+  console.log("Backend connected on port 8800");
 });

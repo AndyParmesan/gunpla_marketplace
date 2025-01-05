@@ -1,9 +1,9 @@
-import axios from 'axios'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Add = () => {
-  const [Gunpla, setGunpla] = useState({
+  const [gunpla, setGunpla] = useState({
     prod_name: "",
     prod_description: "",
     price: null,
@@ -17,28 +17,48 @@ const Add = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    // Validation
-    if (!Gunpla.prod_name || !Gunpla.prod_description || !Gunpla.price || !Gunpla.image) {
+    if (!gunpla.prod_name || !gunpla.prod_description || !gunpla.price || !gunpla.image) {
       alert("Please fill in all fields.");
       return;
     }
     try {
-      await axios.post("http://localhost:8800/Gunpla", Gunpla);
+      await axios.post("http://localhost:8800/gunpla", gunpla);
       navigate("/");
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
   return (
-    <div className="form">
-      <h1>Add New Item</h1>
-      <input type="text" placeholder="name" onChange={handleChange} name="prod_name" />
-      <input type="text" placeholder="description" onChange={handleChange} name="prod_description" />
-      <input type="text" placeholder="image" onChange={handleChange} name="image" />
-      <input type="number" placeholder="price" onChange={handleChange} name="price" />
-
-      <button onClick={handleClick}>Add</button>
+    <div className="form-container">
+      <div className="form">
+        <h1>Add New Item</h1>
+        <input
+          type="text"
+          placeholder="name"
+          onChange={handleChange}
+          name="prod_name"
+        />
+        <input
+          type="text"
+          placeholder="description"
+          onChange={handleChange}
+          name="prod_description"
+        />
+        <input
+          type="text"
+          placeholder="image"
+          onChange={handleChange}
+          name="image"
+        />
+        <input
+          type="number"
+          placeholder="price"
+          onChange={handleChange}
+          name="price"
+        />
+        <button onClick={handleClick}>Add</button>
+      </div>
     </div>
   );
 };
