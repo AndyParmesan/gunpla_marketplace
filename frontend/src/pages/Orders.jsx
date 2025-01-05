@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Orders = ({ orders, setOrders }) => {
-  // Calculate total price
-  const totalPrice = orders.reduce((sum, item) => sum + item.price, 0);
+  // Ensure price is numeric
+  const totalPrice = orders.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
 
   // Remove an item from the cart
   const handleRemove = (index) => {
@@ -18,9 +18,8 @@ const Orders = ({ orders, setOrders }) => {
       return;
     }
 
-    // Simulate a successful checkout
     alert("Thank you for your purchase! Your order has been placed.");
-    setOrders([]); // Clear the cart
+    setOrders([]);
   };
 
   return (
@@ -32,14 +31,12 @@ const Orders = ({ orders, setOrders }) => {
         </p>
       ) : (
         <>
-          {/* Order Summary */}
           <div className="OrderSummary">
             <h2>Order Summary</h2>
             <p>Total Items: {orders.length}</p>
             <p>Total Price: ${totalPrice.toFixed(2)}</p>
           </div>
 
-          {/* Cart Items */}
           <div className="Gunpla">
             {orders.map((item, index) => (
               <div className="Gunpla-item" key={index}>
@@ -52,7 +49,7 @@ const Orders = ({ orders, setOrders }) => {
                 )}
                 <h2>{item.prod_name}</h2>
                 <p>{item.prod_description}</p>
-                <span>${item.price.toFixed(2)}</span>
+                <span>${(Number(item.price) || 0).toFixed(2)}</span>
                 <button
                   className="remove"
                   onClick={() => handleRemove(index)}
@@ -63,7 +60,6 @@ const Orders = ({ orders, setOrders }) => {
             ))}
           </div>
 
-          {/* Buttons Section */}
           <div className="Buttons">
             <button className="checkout" onClick={handleCheckout}>
               Checkout

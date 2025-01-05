@@ -29,7 +29,7 @@ const Update = () => {
     setGunpla((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleClick = async (e) => {
+  async function handleClick(e) {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:8800/gunpla/${gunplaId}`, gunpla);
@@ -37,7 +37,7 @@ const Update = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }
 
   return (
     <div className="form-container">
