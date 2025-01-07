@@ -1,6 +1,8 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import path from "path";
 import { fileURLToPath } from "url"; // Required for ESM
 
@@ -41,49 +43,60 @@ app.get("/gunpla", (req, res) => {
   });
 });
 
-// Add new Gunpla
-app.post("/gunpla", (req, res) => {
-  const { prod_name, prod_description, image, price } = req.body;
-  const query =
-    "INSERT INTO gunpla (`prod_name`, `prod_description`, `image`, `price`) VALUES (?)";
-  const values = [prod_name, prod_description, image, price];
+// User Registration (for creating new users)
+app.post("/register", (req, res) => {
+  const { username, password } = req.body;
 
-  db.query(query, [values], (err) => {
+  // Hash the password before saving
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
     if (err) {
-      console.error("Error inserting data:", err);
-      return res.status(500).json({ message: "Error inserting data" });
+      return res.status(500).json({ message: "Error hashing password" });
     }
-    res.json("Successfully executed");
+
+    const query = "INSERT INTO users (username, password) VALUES (?, ?)";
+    db.query(query, [username, hashedPassword], (err) => {
+      if (err) {
+        console.error("Error registering user:", err);
+        return res.status(500).json({ message: "Error registering user" });
+      }
+      res.json({ message: "User registered successfully" });
+    });
   });
 });
 
-// Delete Gunpla
-app.delete("/gunpla/:id", (req, res) => {
-  const gunplaId = req.params.id;
-  const query = "DELETE FROM gunpla WHERE id = ?";
+// User Login
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
 
-  db.query(query, [gunplaId], (err) => {
+  const query = "SELECT * FROM users WHERE username = ?";
+  db.query(query, [username], (err, result) => {
     if (err) {
-      console.error("Error deleting data:", err);
-      return res.status(500).json({ message: "Error deleting item" });
+      console.error("Error fetching user:", err);
+      return res.status(500).json({ message: "Error fetching user" });
     }
-    res.status(200).json("Successfully deleted");
-  });
-});
 
-// Update Gunpla
-app.put("/gunpla/:id", (req, res) => {
-  const { prod_name, prod_description, price, image } = req.body;
-  const gunplaId = req.params.id;
-  const query =
-    "UPDATE gunpla SET prod_name = ?, prod_description = ?, price = ?, image = ? WHERE id = ?";
-
-  db.query(query, [prod_name, prod_description, price, image, gunplaId], (err) => {
-    if (err) {
-      console.error("Error updating gunpla:", err);
-      return res.status(500).json({ message: "Error updating gunpla" });
+    if (result.length === 0) {
+      return res.status(400).json({ message: "Invalid credentials" });
     }
-    res.status(200).json("Gunpla updated successfully");
+
+    // Compare the password with the stored hash
+    bcrypt.compare(password, result[0].password, (err, isMatch) => {
+      if (err) {
+        console.error("Error comparing passwords:", err);
+        return res.status(500).json({ message: "Error comparing passwords" });
+      }
+
+      if (!isMatch) {
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+
+      // Generate JWT token
+      const token = jwt.sign({ id: result[0].id, username: result[0].username }, "your_jwt_secret_key", {
+        expiresIn: "1h",
+      });
+
+      res.json({ message: "Login successful", token });
+    });
   });
 });
 

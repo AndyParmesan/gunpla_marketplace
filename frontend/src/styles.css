@@ -111,30 +111,6 @@ button:hover {
   background-color: #0056b3;
 }
 
-
-/* Add & View Cart Buttons */
-.add-button, .view-cart {
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 1rem;
-  border-radius: 5px;
-  color: white;
-  background-color: #28a745;
-  margin-bottom: 10px; /* Add a small gap below each button */
-}
-
-.add-button:hover, .view-cart:hover {
-  background-color: #218838;
-}
-
-/* Optional: Create a specific container for the buttons */
-.buttons-container {
-  display: flex;
-  flex-direction: column; /* Stack the buttons vertically */
-  gap: 15px; /* Adjust the gap between the buttons */
-  align-items: center;
-}
-
 /* Add Item Form */
 .form-container {
   display: flex;
@@ -254,4 +230,129 @@ button.continue-shopping:hover {
   .Gunpla {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Login & Signup Form Containers */
+.login-container, .signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.login-box, .signup-container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Login Page Styles */
+.login-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-login {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-login:hover {
+  background-color: #218838;
+}
+
+.btn-signup {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-signup:hover {
+  background-color: #0056b3;
+}
+
+/* Signup Page Styles */
+.signup-container h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.signup-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.signup-container form label {
+  font-size: 1.2em;
+}
+
+.signup-container form input {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signup-container form button {
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-container form button:hover {
+  background-color: #0056b3;
 }
