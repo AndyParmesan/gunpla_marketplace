@@ -23,7 +23,7 @@ const Add = () => {
     }
     try {
       await axios.post("http://localhost:8800/gunpla", gunpla);
-      navigate("/");
+      navigate("/gunpla");
     } catch (err) {
       console.error(err);
     }
