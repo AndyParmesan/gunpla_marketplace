@@ -43,6 +43,44 @@ app.get("/gunpla", (req, res) => {
   });
 });
 
+// Add a new Gunpla
+app.post("/gunpla", (req, res) => {
+  const { prod_name, prod_description, price, image } = req.body;
+
+  if (!prod_name || !prod_description || !price || !image) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const query = "INSERT INTO gunpla (prod_name, prod_description, price, image) VALUES (?, ?, ?, ?)";
+  db.query(query, [prod_name, prod_description, price, image], (err, result) => {
+    if (err) {
+      console.error("Error adding Gunpla:", err);
+      return res.status(500).json({ message: "Error adding Gunpla" });
+    }
+
+    res.json({ message: "Gunpla added successfully", gunplaId: result.insertId });
+  });
+});
+
+// Delete a Gunpla
+app.delete("/gunpla/:id", (req, res) => {
+  const gunplaId = req.params.id;
+  const query = "DELETE FROM gunpla WHERE id = ?";
+
+  db.query(query, [gunplaId], (err, result) => {
+    if (err) {
+      console.error("Error deleting Gunpla:", err);
+      return res.status(500).json({ message: "Error deleting Gunpla" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Gunpla not found" });
+    }
+
+    res.json({ message: "Gunpla deleted successfully" });
+  });
+});
+
 // User Registration (for creating new users)
 app.post("/register", (req, res) => {
   const { username, password } = req.body;
@@ -63,6 +101,31 @@ app.post("/register", (req, res) => {
     });
   });
 });
+
+// Update a Gunpla
+app.put("/gunpla/:id", (req, res) => {
+  const gunplaId = req.params.id;
+  const { prod_name, prod_description, price, image } = req.body;
+
+  if (!prod_name || !prod_description || !price || !image) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const query = "UPDATE gunpla SET prod_name = ?, prod_description = ?, price = ?, image = ? WHERE id = ?";
+  db.query(query, [prod_name, prod_description, price, image, gunplaId], (err, result) => {
+    if (err) {
+      console.error("Error updating Gunpla:", err);
+      return res.status(500).json({ message: "Error updating Gunpla" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Gunpla not found" });
+    }
+
+    res.json({ message: "Gunpla updated successfully" });
+  });
+});
+
 
 // User Login
 app.post("/login", (req, res) => {

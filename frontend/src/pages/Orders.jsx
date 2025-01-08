@@ -27,7 +27,7 @@ const Orders = ({ orders, setOrders }) => {
       <h1>Your Orders</h1>
       {orders.length === 0 ? (
         <p>
-          No items in your cart yet! <Link to="/">Shop Now</Link>
+          No items in your cart yet! <Link to="/gunpla">Shop Now</Link>
         </p>
       ) : (
         <>
@@ -65,7 +65,7 @@ const Orders = ({ orders, setOrders }) => {
               Checkout
             </button>
             <button className="continue-shopping">
-              <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+              <Link to="/gunpla" style={{ textDecoration: "none", color: "white" }}>
                 Continue Shopping
               </Link>
             </button>
